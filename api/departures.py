@@ -46,11 +46,11 @@ class StopDepartureList(Resource):
             ret = current_app.TravelMagic.getDepartures(stopid)
         else:
             ret =  current_app.TravelMagic.getDepartures(stopid)
-            departures, stops = ret['departures'], ret['stops']
-            if not stops:
+            if not ret['stops']:
                 api.abort(404)
-            current_app.TravelMagic.addStops(stops.values())
+            current_app.TravelMagic.addStops(ret['stops'].values())
 
+        departures, stops = ret['departures'], ret['stops']
         return {'departures': departures, 'stops': [stop for stop in stops.values()] }
 
 @api.route('/<name>')
